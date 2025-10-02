@@ -2,47 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Terraform Init & Plan') {
+        stage('Test SSH Connection') {
             steps {
                 sshagent(['gcp-ssh']) {
-                    sh '''
-                        cd /mnt/d/terraform-gcp-vm
-                        terraform init
-                        terraform plan
-                    '''
+                    sh 'ssh -o StrictHostKeyChecking=no shriram@34.127.22.0 whoami'
                 }
             }
-        }
-
-        stage('Terraform Apply') {
-            steps {
-                sshagent(['gcp-ssh']) {
-                    sh '''
-                        cd /mnt/d/terraform-gcp-vm
-                        terraform apply -auto-approve
-                    '''
-                }
-            }
-        }
-
-        stage('Ansible Deploy') {
-            steps {
-                sshagent(['gcp-ssh']) {
-                    sh '''
-                        cd /mnt/d/terraform-gcp-vm
-                        ansible-playbook -i hosts.ini deploy.yml
-                    '''
-                }
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Deployment finished successfully!'
-        }
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
