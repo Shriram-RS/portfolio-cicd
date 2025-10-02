@@ -4,35 +4,28 @@ pipeline {
     stages {
         stage('Terraform Init & Plan') {
             steps {
-                sshagent(['gcp-ssh']) {
-                    sh '''
-                        cd ~/terraform-gcp-vm
-                        terraform init
-                        terraform plan
-                    '''
-                }
+                sh '''
+                    ssh -i /home/jenkins/.ssh/id_rsa -o StrictHostKeyChecking=no shriram@34.127.22.0 \
+                    "cd ~/terraform-gcp-vm && terraform init && terraform plan"
+                '''
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                sshagent(['gcp-ssh']) {
-                    sh '''
-                        cd ~/terraform-gcp-vm
-                        terraform apply -auto-approve
-                    '''
-                }
+                sh '''
+                    ssh -i /home/jenkins/.ssh/id_rsa -o StrictHostKeyChecking=no shriram@34.127.22.0 \
+                    "cd ~/terraform-gcp-vm && terraform apply -auto-approve"
+                '''
             }
         }
 
         stage('Ansible Deploy') {
             steps {
-                sshagent(['gcp-ssh']) {
-                    sh '''
-                        cd ~/terraform-gcp-vm
-                        ansible-playbook -i hosts.ini deploy.yml
-                    '''
-                }
+                sh '''
+                    ssh -i /home/jenkins/.ssh/id_rsa -o StrictHostKeyChecking=no shriram@34.127.22.0 \
+                    "cd ~/terraform-gcp-vm && ansible-playbook -i hosts.ini deploy.yml"
+                '''
             }
         }
     }
