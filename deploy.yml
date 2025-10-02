@@ -1,0 +1,27 @@
+---
+- name: Deploy personal portfolio website
+  hosts: portfolio
+  become: true
+
+  tasks:
+    - name: Ensure Nginx is installed
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Copy website files to /var/www/html using rsync
+      synchronize:
+        src: ./portfolio/
+        dest: /var/www/html/
+        recursive: yes
+        delete: yes
+        rsync_opts:
+          - "--chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r"
+
+    - name: Ensure Nginx is started and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+

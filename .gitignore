@@ -1,0 +1,14 @@
+*.tfstate
+*.tfstate.backup
+.terraform/
+*.swp
+*.DS_Store
+.vscode/
+__pycache__/
+
+*.json
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+/workspace/

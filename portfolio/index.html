@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+
+  <!-- Remix Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <title>Shriram RS - Portfolio</title>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-container">
+      <h1 class="header__logo">Shriram RS</h1>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HOME -->
+    <section class="home section" id="home">
+      <div class="container home-container">
+        <div class="home-text">
+          <h1>Hi, I’m Shriram RS 👋</h1>
+          <p>DevOps Engineer | Azure | Cloud Enthusiast</p>
+        </div>
+        <div class="home-img">
+          <img src="assets/img/home-perfil.png" alt="Shriram RS">
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about section" id="about">
+      <div class="container about-container">
+        <h2>About Me</h2>
+        <div class="about-content">
+          <img src="assets/img/about-perfil.png" alt="About Image">
+          <p>Hello! I'm a passionate DevOps engineer with expertise in cloud technologies and CI/CD pipelines. I love building scalable and secure infrastructure using Terraform, Ansible, Docker, Jenkins, and Kubernetes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects section" id="projects">
+      <div class="container">
+        <h2>Projects</h2>
+        <div class="swiper projects-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide project">
+              <img src="assets/img/projects-1.png" alt="Project 1">
+              <h3>Project One</h3>
+            </div>
+            <div class="swiper-slide project">
+              <img src="assets/img/projects-2.png" alt="Project 2">
+              <h3>Project Two</h3>
+            </div>
+            <div class="swiper-slide project">
+              <img src="assets/img/projects-3.png" alt="Project 3">
+              <h3>Project Three</h3>
+            </div>
+            <div class="swiper-slide project">
+              <img src="assets/img/projects-4.png" alt="Project 4">
+              <h3>Project Four</h3>
+            </div>
+            <div class="swiper-slide project">
+              <img src="assets/img/projects-5.png" alt="Project 5">
+              <h3>Project Five</h3>
+            </div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services section" id="services">
+      <div class="container">
+        <h2>Services</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <i class="ri-cloud-line service-icon"></i>
+            <h3>Cloud Setup</h3>
+            <p>Deploying and managing cloud infrastructure on Azure & Oracle Cloud.</p>
+          </div>
+          <div class="service-card">
+            <i class="ri-tools-line service-icon"></i>
+            <h3>CI/CD Pipelines</h3>
+            <p>Building secure automated pipelines using Jenkins, Docker, and Kubernetes.</p>
+          </div>
+          <div class="service-card">
+            <i class="ri-shield-line service-icon"></i>
+            <h3>Security & Monitoring</h3>
+            <p>Implementing best practices for security and observability in DevOps setups.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- CONTACT -->
+    <section class="contact section" id="contact">
+      <div class="container contact-container">
+        <h2>Contact Me</h2>
+        <form class="contact-form">
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+          <textarea placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Shriram RS. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/scrollreveal.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
