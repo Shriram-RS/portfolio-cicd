@@ -1,41 +1,67 @@
 pipeline {
     agent any
 
+    environment {
+        GCP_VM_USER = 'shriram'
+        GCP_VM_IP   = '34.127.22.0'
+        TERRAFORM_DIR = '~/terraform-gcp-vm'
+    }
+
     stages {
+
+        stage('Checkout Code') {
+            steps {
+                git(
+                    url: 'https://github.com/Shriram-RS/portfolio-cicd.git',
+                    branch: 'main',
+                    credentialsId: 'github-creds'
+                )
+            }
+        }
+
         stage('Terraform Init & Plan') {
             steps {
-                sh '''
-                    ssh -i /home/jenkins/.ssh/id_rsa -o StrictHostKeyChecking=no shriram@34.127.22.0 \
-                    "cd ~/terraform-gcp-vm && terraform init && terraform plan"
-                '''
+                sshagent(['gcp-ssh']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${GCP_VM_USER}@${GCP_VM_IP} \\
+                        "cd ${TERRAFORM_DIR} && terraform init && terraform plan"
+                    """
+                }
             }
         }
 
         stage('Terraform Apply') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
             steps {
-                sh '''
-                    ssh -i /home/jenkins/.ssh/id_rsa -o StrictHostKeyChecking=no shriram@34.127.22.0 \
-                    "cd ~/terraform-gcp-vm && terraform apply -auto-approve"
-                '''
+                sshagent(['gcp-ssh']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${GCP_VM_USER}@${GCP_VM_IP} \\
+                        "cd ${TERRAFORM_DIR} && terraform apply -auto-approve"
+                    """
+                }
             }
         }
 
         stage('Ansible Deploy') {
             steps {
-                sh '''
-                    ssh -i /home/jenkins/.ssh/id_rsa -o StrictHostKeyChecking=no shriram@34.127.22.0 \
-                    "cd ~/terraform-gcp-vm && ansible-playbook -i hosts.ini deploy.yml"
-                '''
+                sshagent(['gcp-ssh']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${GCP_VM_USER}@${GCP_VM_IP} \\
+                        "cd ~/ansible && ansible-playbook deploy.yml -i inventory"
+                    """
+                }
             }
         }
     }
 
     post {
         success {
-            echo 'Deployment finished successfully!'
+            echo "Pipeline completed successfully!"
         }
         failure {
-            echo 'Pipeline failed!'
+            echo "Pipeline failed!"
         }
     }
 }
