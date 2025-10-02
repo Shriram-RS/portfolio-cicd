@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        GCP_VM_USER = 'shriram'
-        GCP_VM_IP   = '34.127.22.0'
+        GCP_VM_USER   = 'shriramshriram5842'   // Correct username on GCP VM
+        GCP_VM_IP     = '34.127.22.0'
         TERRAFORM_DIR = '~/terraform-gcp-vm'
         ANSIBLE_DIR   = '~/ansible'
     }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 sshagent(['gcp-ssh']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ${GCP_VM_USER}@${GCP_VM_IP} \\
+                        ssh -i /var/lib/jenkins/.ssh/jenkins_id_rsa -o StrictHostKeyChecking=no ${GCP_VM_USER}@${GCP_VM_IP} \\
                         "cd ${TERRAFORM_DIR} && terraform init && terraform plan"
                     """
                 }
@@ -38,7 +38,7 @@ pipeline {
             steps {
                 sshagent(['gcp-ssh']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ${GCP_VM_USER}@${GCP_VM_IP} \\
+                        ssh -i /var/lib/jenkins/.ssh/jenkins_id_rsa -o StrictHostKeyChecking=no ${GCP_VM_USER}@${GCP_VM_IP} \\
                         "cd ${TERRAFORM_DIR} && terraform apply -auto-approve"
                     """
                 }
@@ -49,7 +49,7 @@ pipeline {
             steps {
                 sshagent(['gcp-ssh']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ${GCP_VM_USER}@${GCP_VM_IP} \\
+                        ssh -i /var/lib/jenkins/.ssh/jenkins_id_rsa -o StrictHostKeyChecking=no ${GCP_VM_USER}@${GCP_VM_IP} \\
                         "cd ${ANSIBLE_DIR} && ansible-playbook deploy.yml -i inventory"
                     """
                 }
